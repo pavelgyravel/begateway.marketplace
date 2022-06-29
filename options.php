@@ -2,13 +2,8 @@
 
 IncludeModuleLangFile($_SERVER["DOCUMENT_ROOT"]."/local/modules/bemarketplace/options.php");
 
-$module_id = "bemarketplace";
+$module_id = "begateway.marketplace";
 \Bitrix\Main\Loader::includeModule($module_id);
-
-$beMarketplacePerms = $APPLICATION->GetGroupRight($module_id);
-if ($beMarketplacePerms>="R") :
-
-
 
 $dbSites = CSite::GetList("", "", Array("ACTIVE" => "Y"));
 $arSites = array();
@@ -44,7 +39,7 @@ foreach ($arSites as $site) {
 }
 $subTabControl->End();
 $tabControl->End();
-endif;?>
+?>
 
 <script>
   function bemarketplace_application_redraw(site_id) {

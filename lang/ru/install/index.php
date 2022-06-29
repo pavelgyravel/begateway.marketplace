@@ -1,3 +1,3 @@
 <?php
-$MESS ['BEMARKETPLACE_INSTALL_DESCRIPTION'] = "После установки вы сможете пользоваться компонентом bemarketplace";
+$MESS ['BEMARKETPLACE_INSTALL_DESCRIPTION'] = "Авторизация пользователей сервиса bePaid marketplace";
 ?>

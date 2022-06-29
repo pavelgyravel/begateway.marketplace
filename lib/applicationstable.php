@@ -1,5 +1,5 @@
 <?php
-namespace Bitrix\Bemarketplace;
+namespace BeGateway\Module\Marketplace;
 
 use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Data\DataManager,

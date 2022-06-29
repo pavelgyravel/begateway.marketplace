@@ -1,1 +1,1 @@
-<?require($_SERVER["DOCUMENT_ROOT"]."/local/modules/bemarketplace/admin/bemarketplace_applications.php");?>
+<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/begateway.marketplace/admin/bemarketplace_applications.php");?>

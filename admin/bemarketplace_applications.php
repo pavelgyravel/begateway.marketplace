@@ -1,9 +1,7 @@
 <?
-use Bitrix\Bemarketplace\ApplicationsTable;
-
 require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_admin_before.php");
 require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/form/prolog.php");
-$module_id = "bemarketplace";
+$module_id = "begateway.marketplace";
 
 CModule::IncludeModule($module_id);
 
@@ -29,7 +27,7 @@ if (check_bitrix_sessid()) {
           $filter["=SITE_ID"] = $site_id;
         }
 
-        $res = ApplicationsTable::getList(array(
+        $res = BeGateway\Module\Marketplace\ApplicationsTable::getList(array(
           'filter' => $filter
         ));
         $arFields = $res->fetchAll();
@@ -46,7 +44,7 @@ if (check_bitrix_sessid()) {
 
 			if ($application_id)
 			{
-        $application = ApplicationsTable::getByPrimary($application_id)->fetchObject();
+        $application = BeGateway\Module\Marketplace\ApplicationsTable::getByPrimary($application_id)->fetchObject();
         if ($application) {
           $deletion_result = $application->delete();
           
@@ -66,9 +64,9 @@ if (check_bitrix_sessid()) {
       
       if ($_POST['ID']) {
         unset($data['ID']);
-        $result = ApplicationsTable::update($_POST['ID'], $data);
+        $result = BeGateway\Module\Marketplace\ApplicationsTable::update($_POST['ID'], $data);
       } elseif(!isset($_POST['ID'])) {
-        ApplicationsTable::add($_POST);
+        BeGateway\Module\Marketplace\ApplicationsTable::add($_POST);
       }
 
       $result = '{"result":"ok"}';

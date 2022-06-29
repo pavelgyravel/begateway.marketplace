@@ -1,6 +1,8 @@
 <?php
-class CSocServBemarketplace  extends CSocServAuth {
-    const ID = 'Bemarketplace';
+namespace BeGateway\Module\Marketplace;
+
+class CSocServBemarketplace  extends \CSocServAuth {
+    const ID = 'BegatewayMarketplace';
     
     private $oauthApp;
     private $oauthToken;
@@ -22,7 +24,7 @@ class CSocServBemarketplace  extends CSocServAuth {
       if( isset($_REQUEST["access_code"]) && $_REQUEST["access_code"] <> '' &&
           isset($_REQUEST["client_id"]) && $_REQUEST["client_id"] <> '') {
 
-        $result = Bitrix\Bemarketplace\ApplicationsTable::getList(array(
+        $result = \BeGateway\Module\Marketplace\ApplicationsTable::getList(array(
           'filter' => array("=CLIENT_ID" => $_REQUEST["client_id"])
         ));
 
@@ -33,23 +35,18 @@ class CSocServBemarketplace  extends CSocServAuth {
           $arFields = array(
             'EXTERNAL_AUTH_ID' => self::ID,
             'XML_ID' => $user_id,
-            'LOGIN' => $user_id,
+            'LOGIN' => "bm-".$user_id,
             'OATOKEN' => $this->oauthToken['access_token'],
             'OATOKEN_EXPIRES' => time() + $this->oauthToken['expires_in'],
             'REFRESH_TOKEN' => $this->oauthToken['refresh_token'],
             'SITE_ID' => $this->oauthApp['SITE_ID'],
           );
     
-          // if(SITE_ID <> '') {
-          //   $arFields["SITE_ID"] = SITE_ID;
-          // }
-    
           $authError = $this->AuthorizeUser($arFields);
     
           $bSuccess = $authError === true;
           ?>
-          Усперная авторизация. Переход на главную страницу.
-          <script type="text/javascript">
+          <?=GetMessage("BEGATEWAY_MARKETPLACE_USPERNAA_AVTORIZACIA")?><script type="text/javascript">
             window.location = '/';
           </script>
           <?
@@ -61,12 +58,11 @@ class CSocServBemarketplace  extends CSocServAuth {
         echo "Required params access_code client_id is missing";
       }
       die();
-      
    }
 
     private function getOauthToken($code = false) {
       if ($code) {
-        $request = new Bitrix\Main\Web\HttpClient();
+        $request = new \Bitrix\Main\Web\HttpClient();
         $request->setAuthorization($this->oauthApp['CLIENT_ID'], $this->oauthApp['CLIENT_SECRET']);
         $request->setHeader("Accept", "text/json");
         $request->setCharset("utf-8");
@@ -82,7 +78,7 @@ class CSocServBemarketplace  extends CSocServAuth {
     }
 
     private function getUserId() {
-      $request = new Bitrix\Main\Web\HttpClient();
+      $request = new \Bitrix\Main\Web\HttpClient();
       $request->setHeader("Authorization", 'Bearer '.$this->oauthToken['access_token']);
       $request->setCharset("utf-8");
       $response = $request->get($this->oauthApp['HOST'].'/api/v1/m/get_user');
