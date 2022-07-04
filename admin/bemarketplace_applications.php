@@ -32,7 +32,7 @@ if (check_bitrix_sessid()) {
         ));
         $arFields = $res->fetchAll();
         foreach ($arFields as $key => $val) {
-          $arFields[$key]['RETURN_URL'] = "{{YOUR_SHOP_DOMAIN}}/bitrix/tools/oauth/bemarketplace.php?application_id=".$arFields[$key]['ID'];
+          $arFields[$key]['RETURN_URL'] = "{{SHOP_DOMAIN}}/bitrix/tools/oauth/bemarketplace.php?application_id=".$arFields[$key]['ID'];
         }
 				$result = '{"result":"ok","applications":'.CUtil::PhpToJsObject($arFields).'}';
 			} else {

@@ -17,6 +17,9 @@ class CSocServBemarketplace  extends \CSocServAuth {
 
 		  $APPLICATION->RestartBuffer();
 
+      if (!defined('SITE_ID') || !SITE_ID)
+			  die('SITE_ID did not set.');
+
       if ($USER->IsAuthorized()) {
         $USER->Logout();
       }
@@ -25,7 +28,10 @@ class CSocServBemarketplace  extends \CSocServAuth {
           isset($_REQUEST["client_id"]) && $_REQUEST["client_id"] <> '') {
 
         $result = \BeGateway\Module\Marketplace\ApplicationsTable::getList(array(
-          'filter' => array("=CLIENT_ID" => $_REQUEST["client_id"])
+          'filter' => array(
+            "=CLIENT_ID" => $_REQUEST["client_id"],
+            "=SITE_ID" => SITE_ID
+          )
         ));
 
         if ($this->oauthApp = $result->fetch()) {

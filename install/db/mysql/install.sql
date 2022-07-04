@@ -7,6 +7,3 @@ create table if not exists b_bemarketplace_applications (
 
 	PRIMARY KEY (ID)
 );
-
-INSERT INTO b_bemarketplace_applications (SITE_ID, CLIENT_ID, CLIENT_SECRET, HOST) values ("s1", "partner_client_id", "partner_client_secret", "http://app.idp.docker.localhost/")
--- ,  ("s1", "CLIENT_ID", "CLIENT_SECRET", "HOST"),  ("s2", "CLIENT_ID", "CLIENT_SECRET", "HOST"), ("s1", "CLIENT_ID", "CLIENT_SECRET", "HOST"),  ("s1", "CLIENT_ID", "CLIENT_SECRET", "HOST"),  ("s2", "CLIENT_ID", "CLIENT_SECRET", "HOST")
