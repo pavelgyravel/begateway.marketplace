@@ -1,11 +1,9 @@
 <?php
-
-IncludeModuleLangFile($_SERVER["DOCUMENT_ROOT"]."/local/modules/bemarketplace/options.php");
-
+IncludeModuleLangFile(__FILE__);
 $module_id = "begateway.marketplace";
 \Bitrix\Main\Loader::includeModule($module_id);
 
-$dbSites = CSite::GetList("", "", Array("ACTIVE" => "Y"));
+$dbSites = CSite::GetList(($b = "sort"), ($o = "asc"), Array("ACTIVE" => "Y"));
 $arSites = array();
 $aSubTabs = array();
 while ($site = $dbSites->Fetch()) {

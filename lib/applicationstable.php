@@ -1,7 +1,9 @@
 <?php
 namespace BeGateway\Module\Marketplace;
 
-use Bitrix\Main\Localization\Loc, Bitrix\Main\ORM\Data\DataManager, Bitrix\Main\ORM\Fields\IntegerField, Bitrix\Main\ORM\Fields\StringField, Bitrix\Main\ORM\Fields\Validators\LengthValidator;
+use Bitrix\Main;
+use Bitrix\Main\Type;
+use Bitrix\Main\Localization\Loc;
 
 Loc::loadMessages(__FILE__);
 
@@ -21,7 +23,7 @@ Loc::loadMessages(__FILE__);
  *
  */
 
-class ApplicationsTable extends DataManager
+class ApplicationsTable extends Main\Entity\DataManager
 {
   /**
    * Returns DB table name for entity.
@@ -40,7 +42,7 @@ class ApplicationsTable extends DataManager
    */
   public static function getMap()
   {
-    return [new IntegerField('ID', ['primary' => true, 'autocomplete' => true, 'title' => Loc::getMessage('APPLICATIONS_ENTITY_ID_FIELD') ]) , new StringField('SITE_ID', ['required' => true, 'validation' => [__CLASS__, 'validateSiteId'], 'title' => Loc::getMessage('APPLICATIONS_ENTITY_SITE_ID_FIELD') ]) , new StringField('CLIENT_ID', ['required' => true, 'validation' => [__CLASS__, 'validateClientId'], 'title' => Loc::getMessage('APPLICATIONS_ENTITY_CLIENT_ID_FIELD') ]) , new StringField('CLIENT_SECRET', ['required' => true, 'validation' => [__CLASS__, 'validateClientSecret'], 'title' => Loc::getMessage('APPLICATIONS_ENTITY_CLIENT_SECRET_FIELD') ]) , new StringField('HOST', ['required' => true, 'validation' => [__CLASS__, 'validateHost'], 'title' => Loc::getMessage('APPLICATIONS_ENTITY_HOST_FIELD') ]) , ];
+    return [new Main\Entity\IntegerField('ID', ['primary' => true, 'autocomplete' => true, 'title' => Loc::getMessage('APPLICATIONS_ENTITY_ID_FIELD') ]) , new Main\Entity\StringField('SITE_ID', ['required' => true, 'validation' => [__CLASS__, 'validateSiteId'], 'title' => Loc::getMessage('APPLICATIONS_ENTITY_SITE_ID_FIELD') ]) , new Main\Entity\StringField('CLIENT_ID', ['required' => true, 'validation' => [__CLASS__, 'validateClientId'], 'title' => Loc::getMessage('APPLICATIONS_ENTITY_CLIENT_ID_FIELD') ]) , new Main\Entity\StringField('CLIENT_SECRET', ['required' => true, 'validation' => [__CLASS__, 'validateClientSecret'], 'title' => Loc::getMessage('APPLICATIONS_ENTITY_CLIENT_SECRET_FIELD') ]) , new Main\Entity\StringField('HOST', ['required' => true, 'validation' => [__CLASS__, 'validateHost'], 'title' => Loc::getMessage('APPLICATIONS_ENTITY_HOST_FIELD') ]) , ];
   }
 
   /**
@@ -50,7 +52,7 @@ class ApplicationsTable extends DataManager
    */
   public static function validateSiteId()
   {
-    return [new LengthValidator(null, 2) , ];
+    return [new Main\Entity\Validator\Length(null, 2) , ];
   }
 
   /**
@@ -60,7 +62,7 @@ class ApplicationsTable extends DataManager
    */
   public static function validateClientId()
   {
-    return [new LengthValidator(null, 255) , ];
+    return [new Main\Entity\Validator\Length(null, 255) , ];
   }
 
   /**
@@ -70,7 +72,7 @@ class ApplicationsTable extends DataManager
    */
   public static function validateClientSecret()
   {
-    return [new LengthValidator(null, 255) , ];
+    return [new Main\Entity\Validator\Length(null, 255) , ];
   }
 
   /**
@@ -80,6 +82,6 @@ class ApplicationsTable extends DataManager
    */
   public static function validateHost()
   {
-    return [new LengthValidator(null, 255) , ];
+    return [new Main\Entity\Validator\Length(null, 255) , ];
   }
 }

@@ -1,6 +1,6 @@
 <?
 global $MESS;
-IncludeModuleLangFile($_SERVER["DOCUMENT_ROOT"] . "/local/modules/bemarkeplace/install/index.php");
+IncludeModuleLangFile(__FILE__);
 
 class begateway_marketplace extends CModule
 {
