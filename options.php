@@ -46,7 +46,7 @@ $tabControl->End();
       {
         if (res.result == 'ok')
         {
-          var html = '<div><div>ID</div><div>SITE ID</div><div>HOST</div><div>CLIENT ID</div><div>RETURN URL</div></div>';
+          var html = '<div><div>ID</div><div>SITE ID</div><div>HOST</div><div>CLIENT ID</div><div>RETURN URL</div><div>BANK TYPE</div></div>';
           res.applications.forEach(function(application){
             html += "<div>";
             html += "<div>"+ application['ID'] +"</div>";
@@ -54,6 +54,7 @@ $tabControl->End();
             html += "<div>"+ application['HOST'] +"</div>";
             html += "<div>"+ application['CLIENT_ID'] +"</div>";
             html += "<div>"+ application['RETURN_URL'] +"</div>";
+            html += "<div>"+ application['BANK_TYPE'] +"</div>";
             html += '<div><a href="javascript: edit_application('+application['ID']+')" class="form-action-button action-edit" title="<?php echo GetMessage("BEMARKETPLACE_EDIT"); ?>"></a><a href="javascript: delete_application('+application['ID']+', \''+application['SITE_ID']+'\')" class="form-action-button action-delete" title="<?php echo GetMessage("BEMARKETPLACE_DELETE"); ?>"></a></div>';
             html += "</div>";
           });
@@ -127,9 +128,22 @@ $tabControl->End();
 
   function bemarketplace_application(site_id, data) {
     var popup_id = Math.random();
-    data = data || {}
+    var bank_types = ['BelapbFl', 'BelapbUl'];
+    data = data || {};
+    
 
-    var content = '<div class="form-crm-settings form-crm-settings-hide-auth" id="popup_cont_'+popup_id+'"><form name="form_'+popup_id+'"><input type="hidden" name="SITE_ID" value="'+BX.util.htmlspecialchars(site_id)+'"><table cellpadding="0" cellspacing="2" border="0"><tr><td align="right">Site ID:</td><td>'+BX.util.htmlspecialchars(site_id)+'</td></tr><tr><td align="right">Client ID:</td><td><input type="text" name="CLIENT_ID" value="'+BX.util.htmlspecialchars(data.CLIENT_ID||'')+'"></td></tr><tr><td align="right">Client secret:</td><td><input type="text" name="CLIENT_SECRET" value="'+BX.util.htmlspecialchars(data.CLIENT_SECRET||'')+'"></td></tr><tr><td align="right">Host:</td><td><input type="text" name="HOST" value="'+BX.util.htmlspecialchars(data.HOST||'')+'"></td></tr></table></form></div>';
+    var content = '<div class="form-crm-settings form-crm-settings-hide-auth" id="popup_cont_'+popup_id+'"> \
+      <form name="form_'+popup_id+'"> \
+        <input type="hidden" name="SITE_ID" value="'+BX.util.htmlspecialchars(site_id)+'"> \
+        <table cellpadding="0" cellspacing="2" border="0"> \
+          <tr><td align="right">Site ID:</td><td>'+BX.util.htmlspecialchars(site_id)+'</td></tr> \
+          <tr><td align="right">Client ID:</td><td><input type="text" name="CLIENT_ID" value="'+BX.util.htmlspecialchars(data.CLIENT_ID||'')+'"></td></tr> \
+          <tr><td align="right">Client secret:</td><td><input type="text" name="CLIENT_SECRET" value="'+BX.util.htmlspecialchars(data.CLIENT_SECRET||'')+'"></td></tr> \
+          <tr><td align="right">Host:</td><td><input type="text" name="HOST" value="'+BX.util.htmlspecialchars(data.HOST||'')+'"></td></tr> \
+          <tr><td align="right">Bank type:</td><td><select name="BANK_TYPE"> \
+          ' + bank_types.map(function(el){ 
+            return "<option value="+el+" " + ((el==data.BANK_TYPE) ? 'selected' : '') + " >"+el+"</option>";
+          }).join('') + '</select></td></tr></table></form></div>';
     
     var wnd = new BX.PopupWindow('popup_' + popup_id, window, {
 		titleBar: {content: BX.create('DIV', {text: (data.CLIENT_ID) ? '<?php echo GetMessage("BEMARKETPLACE_APPLICATION_EDIT"); ?>' : '<?php echo GetMessage("BEMARKETPLACE_APPLICATION_CREATE"); ?>'  })},
@@ -166,7 +180,8 @@ $tabControl->End();
       SITE_ID: form.SITE_ID.value,
       CLIENT_ID: form.CLIENT_ID.value,
       CLIENT_SECRET: form.CLIENT_SECRET.value,
-      HOST: form.HOST.value
+      HOST: form.HOST.value,
+      BANK_TYPE: form.BANK_TYPE.value
     }
 
     if (data_old.ID) {
@@ -235,6 +250,10 @@ $tabControl->End();
 
   .bemarketplace_applications > div > div:nth-child(5) {
     width:300px;
+  }
+
+  .bemarketplace_applications > div > div:nth-child(6) {
+    width:100px;
   }
 
   .bemarketplace_applications .error {

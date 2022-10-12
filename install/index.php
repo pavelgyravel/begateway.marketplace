@@ -58,7 +58,7 @@ class begateway_marketplace extends CModule
 
     $errors = false;
 
-    if (array_key_exists("savedata", $_REQUEST) && $_REQUEST["savedata"] != "Y")
+    if (!array_key_exists("savedata", $_REQUEST) || $_REQUEST["savedata"] !== "Y")
     {
       $errors = $DB->RunSQLBatch($this->MODULE_PATH . "/install/db/" . mb_strtolower($DB->type) . "/uninstall.sql");
     }
